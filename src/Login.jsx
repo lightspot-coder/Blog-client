@@ -20,7 +20,9 @@ function Login() {
         return response.json();
       })
       .then((data) => {
-        localStorage.setItem("token", data.token);
+        console.log(data);
+        localStorage.setItem("user", JSON.stringify(data));
+        //localStorage.setItem("token", data.token);
       });
     navigate("/");
   }

@@ -7,6 +7,8 @@ import Showblogs from "./ShowBlogs.jsx";
 import Login from "./Login.jsx";
 import Showposts from "./ShowPosts.jsx";
 import Showpost from "./ShowPost.jsx";
+import Signup from "./Signup.jsx";
+import CreateBlog from "./CreateBlog.jsx";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +18,14 @@ const router = createBrowserRouter([
   {
     path: "login",
     element: <Login />,
+  },
+  {
+    path: "signup",
+    element: <Signup />,
+  },
+  {
+    path: "createBlog",
+    element: <CreateBlog />,
   },
   {
     path: "blogs",

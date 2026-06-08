@@ -30,11 +30,13 @@ function Showposts() {
               <p>
                 <b>post title : {post.title}</b>
               </p>
-              <a href={`/blogs/${blogId}/posts/${post.id}`}>Go to post info</a>
+              <a href={`/blogs/${blogId}/posts/${post.id}`}>
+                Go to the post info
+              </a>
             </li>
           ))}
         </ul>
-        <a href="/">Go home page</a>
+        <a href="/">Go back to the home page</a>
       </>
     );
   }

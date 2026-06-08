@@ -49,8 +49,12 @@ function Showpost() {
         ) : (
           <button onClick={handleClick}>Load comments</button>
         )}
-
-        <a href="/">Go home page</a>
+        <br />
+        <br />
+        <a href={`/blogs/${blogId}/posts`}>Go back to the blog</a>
+        <br />
+        <br />
+        <a href="/">Go back to the home page</a>
       </>
     );
   }
