@@ -5,6 +5,8 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import App from "./App.jsx";
 import Showblogs from "./ShowBlogs.jsx";
 import Login from "./Login.jsx";
+import Showposts from "./ShowPosts.jsx";
+import Showpost from "./ShowPost.jsx";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +20,14 @@ const router = createBrowserRouter([
   {
     path: "blogs",
     element: <Showblogs />,
+  },
+  {
+    path: "/blogs/:blogId/posts",
+    element: <Showposts />,
+  },
+  {
+    path: "/blogs/:blogId/posts/:postId",
+    element: <Showpost />,
   },
 ]);
 

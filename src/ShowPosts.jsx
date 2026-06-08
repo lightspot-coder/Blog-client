@@ -1,35 +1,36 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router";
 
-function Showblogs() {
-  const [blogs, setBlogs] = useState(null);
+function Showposts() {
+  const [posts, setPosts] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { blogId } = useParams();
   useEffect(() => {
-    fetch("http://localhost:3000/blog-api/blogs")
+    fetch(`http://localhost:3000/blog-api/blogs/${blogId}/posts`)
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        setBlogs(data);
+        setPosts(data);
       })
       .catch((error) => setError(error))
       .finally(() => setLoading(false));
-  }, []);
+  }, [blogId]);
   if (loading) return <p>Loading...</p>;
   if (error) {
     return <a href="/">Go back, something goes wrong</a>;
   } else {
     return (
       <>
-        <h1>Blogs page</h1>
+        <h1>Posts page</h1>
         <ul>
-          {blogs.map((blog) => (
+          {posts.map((post) => (
             <li>
               <p>
-                <b>blog title : {blog.title}</b>
+                <b>post title : {post.title}</b>
               </p>
-              <p>creator : {blog.creator.name}</p>
-              <a href={`/blogs/${blog.id}/posts`}>Show posts</a>
+              <a href={`/blogs/${blogId}/posts/${post.id}`}>Go to post info</a>
             </li>
           ))}
         </ul>
@@ -39,4 +40,4 @@ function Showblogs() {
   }
 }
 
-export default Showblogs;
+export default Showposts;
