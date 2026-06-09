@@ -11,11 +11,22 @@ function App() {
   }
   return (
     <>
-      <h1>Welcome to the blog client {user ? user.user : "visitor"}</h1>
+      <h1>Welcome to the blog App {user ? user.name : "visitor"}</h1>
       <ul>
-        <li>
-          <a href="createBlog">Create your blog</a>
-        </li>
+        {user ? (
+          !user.blogId ? (
+            <li>
+              <a href="createBlog">Create your blog</a>
+            </li>
+          ) : (
+            <li>
+              <a href="blog">Visit your blog</a>
+            </li>
+          )
+        ) : (
+          <></>
+        )}
+
         <li>
           <a href="blogs">See all blogs</a>
         </li>

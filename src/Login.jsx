@@ -6,13 +6,14 @@ function Login() {
   const [password, setPassword] = useState(undefined);
   const navigate = useNavigate();
 
-  async function handleLogInForm() {
-    //e.preventDefault();
+  async function handleLogInForm(e) {
+    e.preventDefault();
 
     const body = new FormData();
     body.set("name", name);
     body.set("password", password);
-    fetch("http://localhost:3000/blog-api/login", {
+    console.log("here");
+    await fetch("http://localhost:3000/blog-api/login", {
       method: "POST",
       body: new URLSearchParams(body),
     })

@@ -9,6 +9,10 @@ import Showposts from "./ShowPosts.jsx";
 import Showpost from "./ShowPost.jsx";
 import Signup from "./Signup.jsx";
 import CreateBlog from "./CreateBlog.jsx";
+import Showblog from "./ShowBlog.jsx";
+import CreatePost from "./CreatePost.jsx";
+import Updatepost from "./UpdatePost.jsx";
+import Deletepost from "./DeletePost.jsx";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +32,10 @@ const router = createBrowserRouter([
     element: <CreateBlog />,
   },
   {
+    path: "blog",
+    element: <Showblog />,
+  },
+  {
     path: "blogs",
     element: <Showblogs />,
   },
@@ -36,13 +44,23 @@ const router = createBrowserRouter([
     element: <Showposts />,
   },
   {
+    path: "/blogs/${blogId}/createpost",
+    element: <CreatePost />,
+  },
+  {
     path: "/blogs/:blogId/posts/:postId",
     element: <Showpost />,
+  },
+  {
+    path: "/blogs/:blogId/posts/:postId/update",
+    element: <Updatepost />,
+  },
+  {
+    path: "/blogs/:blogId/posts/:postId/delete",
+    element: <Deletepost />,
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
+  <RouterProvider router={router} />,
 );

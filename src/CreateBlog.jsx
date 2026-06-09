@@ -4,13 +4,12 @@ function CreateBlog() {
   const [blogTitle, setBlogTitle] = useState(null);
   const [blogCreated, setBlogCreated] = useState(false);
   const [message, setMessage] = useState("");
-
+  const user = JSON.parse(localStorage.getItem("user"));
   async function handleForm(e) {
     e.preventDefault();
-    const user = JSON.parse(localStorage.getItem("user"));
     const body = new FormData();
     body.set("title", blogTitle);
-    fetch("http://localhost:3000/blog-api/blogs", {
+    await fetch("http://localhost:3000/blog-api/blogs", {
       headers: {
         Authorization: "bearer " + user.token,
       },
@@ -22,6 +21,7 @@ function CreateBlog() {
       })
       .then((data) => {
         console.log(data);
+        setMessage(data.message);
         setBlogCreated(true);
       });
   }

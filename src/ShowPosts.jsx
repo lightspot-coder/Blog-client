@@ -6,6 +6,8 @@ function Showposts() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const { blogId } = useParams();
+  const user = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
     fetch(`http://localhost:3000/blog-api/blogs/${blogId}/posts`)
       .then((response) => {
@@ -23,7 +25,7 @@ function Showposts() {
   } else {
     return (
       <>
-        <h1>Posts page</h1>
+        <h1>{user && user.blogId == blogId && user.name + " "}Posts page</h1>
         <ul>
           {posts.map((post) => (
             <li>
@@ -36,6 +38,10 @@ function Showposts() {
             </li>
           ))}
         </ul>
+        {user && user.blogId == blogId && (
+          <a href="/blogs/${blogId}/createpost">Add a new post</a>
+        )}
+        <br />
         <a href="/">Go back to the home page</a>
       </>
     );

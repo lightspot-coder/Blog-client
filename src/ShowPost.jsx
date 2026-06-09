@@ -26,7 +26,7 @@ function Showpost() {
   const url = `http://localhost:3000/blog-api/blogs/${blogId}/posts/${postId}`;
   const { data, error, loading } = FetchData(url);
   const [loadComments, setLoadComments] = useState(false);
-
+  const user = JSON.parse(localStorage.getItem("user"));
   function handleClick(e) {
     e.preventDefault();
     setLoadComments(true);
@@ -37,24 +37,39 @@ function Showpost() {
   } else {
     return (
       <>
-        <h1>Post page</h1>
+        <h1>{user && user.blogId == blogId && user.name + " "}Post page</h1>
         <p>
           <b>Title: {data.title}</b>
         </p>
         <p>text : {data.text}</p>
         <p>public : {data.public == true ? "true" : "false"}</p>
         <p>create at : {data.createdAt}</p>
-        {loadComments ? (
-          <ShowComment url={url + "/comments"} />
-        ) : (
-          <button onClick={handleClick}>Load comments</button>
+        <br />
+        {user && user.blogId == blogId && (
+          <>
+            <a href={`/blogs/${blogId}/posts/${postId}/update`}>Update post</a>
+            <br />
+            <a href={`/blogs/${blogId}/posts/${postId}/delete`}>Delete post</a>
+          </>
         )}
         <br />
         <br />
+
         <a href={`/blogs/${blogId}/posts`}>Go back to the blog</a>
         <br />
-        <br />
         <a href="/">Go back to the home page</a>
+        <br />
+        <br />
+        {loadComments ? (
+          <ShowComment
+            url={url + "/comments"}
+            blogId={blogId}
+            postId={postId}
+            setLoadComments={setLoadComments}
+          />
+        ) : (
+          <button onClick={handleClick}>Load comments</button>
+        )}
       </>
     );
   }
