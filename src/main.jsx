@@ -13,6 +13,8 @@ import Showblog from "./ShowBlog.jsx";
 import CreatePost from "./CreatePost.jsx";
 import Updatepost from "./UpdatePost.jsx";
 import Deletepost from "./DeletePost.jsx";
+import Deleteblog from "./DeleteBlog.jsx";
+import Updateblog from "./UpdateBlog.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,13 +33,22 @@ const router = createBrowserRouter([
     path: "createBlog",
     element: <CreateBlog />,
   },
+
   {
     path: "blog",
     element: <Showblog />,
   },
   {
+    path: "/blog/updateBlog",
+    element: <Updateblog />,
+  },
+  {
     path: "blogs",
     element: <Showblogs />,
+  },
+  {
+    path: "/blogs/:blogId",
+    element: <Deleteblog />,
   },
   {
     path: "/blogs/:blogId/posts",

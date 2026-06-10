@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
 function Showblog() {
   const [blog, setBlog] = useState(null);
@@ -17,6 +18,15 @@ function Showblog() {
       .finally(() => setLoading(false));
   }, []);
 
+  const navigate = useNavigate();
+
+  function handleUpdate() {
+    navigate("/updateBlog", {
+      state: {
+        title: blog.title,
+      },
+    });
+  }
   if (loading) return <p>Loading...</p>;
   if (error) {
     return <a href="/">Go back, something goes wrong</a>;
@@ -28,6 +38,10 @@ function Showblog() {
           <b>title : {blog.title}</b>
         </p>
         <a href={`/blogs/${blog.id}/posts`}>Show your posts</a>
+        <br />
+        <a onClick={handleUpdate}>Update the blog title</a>
+        <br />
+        <a href={`/blogs/${blog.id}`}>Delete the blog</a>
         <br></br>
         <a href="/">Go home page</a>
       </>
