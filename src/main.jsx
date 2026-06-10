@@ -44,7 +44,7 @@ const router = createBrowserRouter([
     element: <Showposts />,
   },
   {
-    path: "/blogs/${blogId}/createpost",
+    path: "/blogs/:blogId/createpost",
     element: <CreatePost />,
   },
   {

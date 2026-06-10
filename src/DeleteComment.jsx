@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function DeleteComment({ blogId, postId, commentId, setLoadComments }) {
+function DeleteComment({ blogId, postId, commentId, setRefreshComments }) {
   const [message, setMessage] = useState(null);
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -21,8 +21,8 @@ function DeleteComment({ blogId, postId, commentId, setLoadComments }) {
       .then((data) => {
         console.log(data);
         setMessage(data.message);
+        setRefreshComments(Math.random());
       });
-    setLoadComments(false);
   }
 
   return (

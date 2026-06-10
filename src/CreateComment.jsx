@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function CreateComment({ blogId, postId, setAddComment, setLoadComments }) {
+function CreateComment({ blogId, postId, setAddComment, setRefreshComments }) {
   const [commentMessage, setCommentMessage] = useState(null);
   const [message, setMessage] = useState("");
   const user = JSON.parse(localStorage.getItem("user"));
@@ -26,7 +26,7 @@ function CreateComment({ blogId, postId, setAddComment, setLoadComments }) {
         console.log(data);
         setMessage(data.message);
         setAddComment(false);
-        setLoadComments(false);
+        setRefreshComments(Math.random());
       });
   }
 

@@ -37,7 +37,9 @@ function App() {
           <a href="signup">Sign up</a>
         </li>
         <li>
-          <a onClick={handleLogOut}>Log out</a>
+          <a onClick={handleLogOut} href="">
+            Log out
+          </a>
         </li>
       </ul>
     </>

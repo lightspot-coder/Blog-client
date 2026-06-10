@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import ShowComment from "./ShowComments";
+import ShowComments from "./ShowComments";
 
-export function FetchData(url) {
+export function FetchData(url, refresh) {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
-    fetch(url)
+    fetch(url, {
+      headers: {
+        Authorization: "bearer " + (user ? user.token : ""),
+      },
+    })
       .then((response) => {
         return response.json();
       })
@@ -17,19 +22,29 @@ export function FetchData(url) {
       })
       .catch((error) => setError(error))
       .finally(() => setLoading(false));
-  }, [url]);
+  }, [url, refresh]);
   return { data, error, loading };
 }
 
 function Showpost() {
   const { blogId, postId } = useParams();
   const url = `http://localhost:3000/blog-api/blogs/${blogId}/posts/${postId}`;
-  const { data, error, loading } = FetchData(url);
+  const { data, error, loading } = FetchData(url, 0);
   const [loadComments, setLoadComments] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
   function handleClick(e) {
     e.preventDefault();
     setLoadComments(true);
+  }
+  function handleUpdate() {
+    navigate(`/blogs/${blogId}/posts/${postId}/update`, {
+      state: {
+        title: data.title,
+        text: data.text,
+        public: data.public,
+      },
+    });
   }
   if (loading) return <p>Loading...</p>;
   if (error) {
@@ -42,12 +57,17 @@ function Showpost() {
           <b>Title: {data.title}</b>
         </p>
         <p>text : {data.text}</p>
-        <p>public : {data.public == true ? "true" : "false"}</p>
+        {user && user.blogId == blogId && (
+          <p>public : {data.public == true ? "true" : "false"}</p>
+        )}
+
         <p>create at : {data.createdAt}</p>
         <br />
         {user && user.blogId == blogId && (
           <>
-            <a href={`/blogs/${blogId}/posts/${postId}/update`}>Update post</a>
+            <a onClick={handleUpdate} href="">
+              Update post
+            </a>
             <br />
             <a href={`/blogs/${blogId}/posts/${postId}/delete`}>Delete post</a>
           </>
@@ -61,11 +81,10 @@ function Showpost() {
         <br />
         <br />
         {loadComments ? (
-          <ShowComment
+          <ShowComments
             url={url + "/comments"}
             blogId={blogId}
             postId={postId}
-            setLoadComments={setLoadComments}
           />
         ) : (
           <button onClick={handleClick}>Load comments</button>
@@ -74,5 +93,5 @@ function Showpost() {
     );
   }
 }
-
+// <a href={`/blogs/${blogId}/posts/${postId}/update`}>Update post</a>
 export default Showpost;

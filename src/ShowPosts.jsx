@@ -9,7 +9,11 @@ function Showposts() {
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    fetch(`http://localhost:3000/blog-api/blogs/${blogId}/posts`)
+    fetch(`http://localhost:3000/blog-api/blogs/${blogId}/posts`, {
+      headers: {
+        Authorization: "bearer " + (user ? user.token : ""),
+      },
+    })
       .then((response) => {
         return response.json();
       })
@@ -39,7 +43,7 @@ function Showposts() {
           ))}
         </ul>
         {user && user.blogId == blogId && (
-          <a href="/blogs/${blogId}/createpost">Add a new post</a>
+          <a href={`/blogs/${blogId}/createpost`}>Add a new post</a>
         )}
         <br />
         <a href="/">Go back to the home page</a>

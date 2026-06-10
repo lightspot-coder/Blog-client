@@ -12,7 +12,7 @@ function Signup() {
     const body = new FormData();
     body.set("name", name);
     body.set("password", password);
-    fetch("http://localhost:3000/blog-api/users", {
+    await fetch("http://localhost:3000/blog-api/users", {
       method: "POST",
       body: new URLSearchParams(body),
     })

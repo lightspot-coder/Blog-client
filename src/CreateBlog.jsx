@@ -22,6 +22,8 @@ function CreateBlog() {
       .then((data) => {
         console.log(data);
         setMessage(data.message);
+        user.blogId = data.blog.id;
+        localStorage.setItem("user", JSON.stringify(user));
         setBlogCreated(true);
       });
   }

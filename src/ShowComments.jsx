@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FetchData } from "./ShowPost";
 import CreateComment from "./CreateComment";
 import DeleteComment from "./DeleteComment";
 
-function ShowComment({ url, blogId, postId, setLoadComments }) {
-  const { data, error, loading } = FetchData(url);
+function ShowComments({ url, blogId, postId }) {
+  const [refreshComments, setRefreshComments] = useState(0);
+  let { data, error, loading } = FetchData(url, refreshComments);
   const [addComment, setAddComment] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
   function handleAddComment(e) {
@@ -41,7 +42,7 @@ function ShowComment({ url, blogId, postId, setLoadComments }) {
                       blogId={blogId}
                       postId={postId}
                       commentId={comment.id}
-                      setLoadComments={setLoadComments}
+                      setRefreshComments={setRefreshComments}
                     />
                   )}
               </li>
@@ -54,7 +55,7 @@ function ShowComment({ url, blogId, postId, setLoadComments }) {
               blogId={blogId}
               postId={postId}
               setAddComment={setAddComment}
-              setLoadComments={setLoadComments}
+              setRefreshComments={setRefreshComments}
             />
           ) : (
             <button onClick={handleAddComment}>Add a comment</button>
@@ -64,4 +65,4 @@ function ShowComment({ url, blogId, postId, setLoadComments }) {
   }
 }
 
-export default ShowComment;
+export default ShowComments;
